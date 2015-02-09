@@ -18,6 +18,7 @@ public class NetworkConstruction {
 
 	public static int noOfEdges;
 	public static int noOfVertices;
+	public static int currentHostId;
 	public static HashMap<Integer, Host> hostMap = new HashMap<Integer, Host>();
 	public static Graph nodeGraph;
 
@@ -33,7 +34,8 @@ public class NetworkConstruction {
 		
 		System.out.println(System.getProperty("user.name")); 
 		java.net.InetAddress localMachine = java.net.InetAddress.getLocalHost();
-		System.out.println("Hostname of local machine: " + localMachine.getHostName());	}
+		System.out.println("Hostname of local machine: " + localMachine.getHostName());
+	}
 
 
 	public void constructGraph(String fileName) throws FileNotFoundException
@@ -80,6 +82,7 @@ public class NetworkConstruction {
 		}
 		printHostInfo();
 		nodeGraph.printGraph();	
+		currentHostId = 01;
 	}
 
 	public void printHostInfo()
@@ -90,5 +93,14 @@ public class NetworkConstruction {
 			System.out.println("Host ID : "+host.hostId+" Host Name : "+host.hostName+" Host Port :  "+host.hostPort);
 		}
 	}
+	
+	public String getCurrentHostName() throws UnknownHostException
+	{
+		java.net.InetAddress localMachine = java.net.InetAddress.getLocalHost();
+		System.out.println("Hostname of local machine: " + localMachine.getHostName());
+		
+		return localMachine.getHostName();
+	}
+	
 
 }

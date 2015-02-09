@@ -3,18 +3,16 @@
  */
 package com.node.discovery.sctp;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-
 /**
  * @author Dany
  *
  */
-public class SCTPServer {
-
-	/**
-	 * @param args
-	 */
+import java.io.*;
+import java.net.*;
+import com.sun.nio.sctp.*;
+import java.nio.*;
+public class SctpServer 
+{
 	public static final int MESSAGE_SIZE = 100;
 	public void go()
 	{
@@ -68,7 +66,8 @@ public class SCTPServer {
 	public static void main(String args[])
 	{
 		
-		SCTPServer SctpServerObj = new SCTPServer();
+		SctpServer SctpServerObj = new SctpServer();
 		SctpServerObj.go();
 	}
+
 }
