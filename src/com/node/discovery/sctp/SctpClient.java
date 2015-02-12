@@ -9,10 +9,18 @@ package com.node.discovery.sctp;
  */
 import java.io.*;
 import java.net.*;
+
 import com.sun.nio.sctp.*;
+
 import java.nio.*;
-public class SctpClient 
-{
+import java.io.*;
+import java.net.*;
+
+import com.sun.nio.sctp.*;
+
+import java.nio.*;
+public class SctpClient implements Runnable{
+	
 	public static final int MESSAGE_SIZE = 100;
 	public void go()
 	{
@@ -42,6 +50,11 @@ public class SctpClient
 		{
 			ex.printStackTrace();
 		}
+	}
+	
+	public void run()
+	{
+		go();
 	}
 	public static void main(String args[])
 	{

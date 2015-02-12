@@ -9,10 +9,11 @@ package com.node.discovery.sctp;
  */
 import java.io.*;
 import java.net.*;
+
 import com.sun.nio.sctp.*;
+
 import java.nio.*;
-public class SctpServer 
-{
+public class SctpServer implements Runnable{
 	public static final int MESSAGE_SIZE = 100;
 	public void go()
 	{
@@ -61,6 +62,11 @@ public class SctpServer
 		byte[] bufArr = new byte[byteBuffer.remaining()];
 		byteBuffer.get(bufArr);
 		return new String(bufArr);
+	}
+	
+	public void run()
+	{
+		go();
 	}
 
 	public static void main(String args[])
