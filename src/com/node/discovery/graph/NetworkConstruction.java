@@ -9,6 +9,8 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import com.node.discovery.sctp.Host;
+
 /**
  * @author Dany
  *

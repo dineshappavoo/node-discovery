@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.node.discovery.sctp;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,24 +9,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import com.node.discovery.graph.Host;
-
 /**
  * @author Dinesh Appavoo
  *
  */
-public class SctpClientServer{
+public class NodeDiscovery{
 
 	private int noOfVertices;
 	private static HashMap<Integer, Host> nodeMap;
-
+	private static int nodeId;
+	private static int nWaitingForResponseCount;
+	
 	public void initiateThread()
 	{
-		SctpClient  sctpClient = new SctpClient();
-		SctpServer sctpServer = new SctpServer();
+		//SctpClientdc01  sctpClient = new SctpClientdc01(nodeList);
+		SctpServer sctpServer = new SctpServer(nodeMap, nodeId, nWaitingForResponseCount);
 
-		new Thread(sctpClient).start();
 		new Thread(sctpServer).start();
+		//new Thread(sctpClient).start();
+
 	}
 
 	public HashMap<Integer, Host> constructGraph(String fileName, int nodeId) throws FileNotFoundException
@@ -67,10 +68,10 @@ public class SctpClientServer{
 				{
 					if((checker=scanner.next()).equals("n")){
 						hostId = scanner.nextInt();
-						hostName = scanner.next();
+						hostName = scanner.next()+".utdallas.edu";
 						hostPort = scanner.nextInt();
 
-						if(nodeMap.get(hostId)!=null)
+						if(nodeMap.get(hostId)!=null || hostId == nodeId)
 						{
 							nodeMap.put(hostId, new Host(hostId, hostName, hostPort));
 						}
@@ -81,42 +82,20 @@ public class SctpClientServer{
 		return nodeMap;
 	}
 
-	public void  startDiscovery(ArrayList<Host> hostList)
-	{
-		int size = hostList.size();
-		int nNumOfThreads=size;
-		Thread[] tThreads = new Thread[nNumOfThreads];
-		SctpClient  sctpClient;
-		for(int i=0;i<size;i++)
-		{
-			if(nodeMap.get(hostList.get(i).hostId) ==null)
-			{
-				sctpClient = new SctpClient();
-				tThreads[i] = new Thread(sctpClient);
-				tThreads[i].start();
-			}
-		}
-	}
-
-
 	/**
 	 * @param args
 	 * @throws FileNotFoundException 
 	 */
 	public static void main(String[] args) throws FileNotFoundException {
 
-		SctpClientServer sctpClientServer = new SctpClientServer();
-		HashMap<Integer, Host> nMap = sctpClientServer.constructGraph("/Users/Dany/Documents/FALL-2013-COURSES/Imp_Data_structures/workspace/node-discovery/src/com/node/discovery/input/config.txt", 1);
-		ArrayList<Host> tempNodeList = new ArrayList<Host>();
-		for(int node : nMap.keySet())
-		{
-			Host host = nMap.get(node);
-			if(host!=null)
-			{
-				tempNodeList.add(host);
-				System.out.println("NodeId : "+host.hostId+" Host Name : "+host.hostName+" Port : "+host.hostPort);
-			}
-		}
+		NodeDiscovery sctpClientServer = new NodeDiscovery();
+		
+		Scanner scanner = new Scanner(System.in);
+		nodeId = scanner.nextInt();
+		
+		HashMap<Integer, Host> nMap = sctpClientServer.constructGraph("config.txt", nodeId);
+		System.out.println("INITIAL WAITING COUNT : "+nWaitingForResponseCount);
+		sctpClientServer.initiateThread();
 	}
 
 }

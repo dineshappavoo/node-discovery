@@ -1,13 +1,15 @@
+import java.io.Serializable;
+
 /**
  * 
  */
-package com.node.discovery.graph;
+
 
 /**
  * @author Dany
  *
  */
-public class Host {
+public class Host implements Serializable{
 	
 	public int hostId;
 	public String hostName;
