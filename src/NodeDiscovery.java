@@ -20,14 +20,11 @@ public class NodeDiscovery{
 	private static int nodeId;
 	private static int nWaitingForResponseCount;
 	
-	public void initiateThread()
+	public void initiateDiscovery()
 	{
-		//SctpClientdc01  sctpClient = new SctpClientdc01(nodeList);
 		SctpServer sctpServer = new SctpServer(nodeMap, nodeId, nWaitingForResponseCount);
 
 		new Thread(sctpServer).start();
-		//new Thread(sctpClient).start();
-
 	}
 
 	public HashMap<Integer, Host> constructGraph(String fileName, int nodeId) throws FileNotFoundException
@@ -95,7 +92,7 @@ public class NodeDiscovery{
 		
 		HashMap<Integer, Host> nMap = sctpClientServer.constructGraph("config.txt", nodeId);
 		System.out.println("INITIAL WAITING COUNT : "+nWaitingForResponseCount);
-		sctpClientServer.initiateThread();
+		sctpClientServer.initiateDiscovery();
 	}
 
 }
