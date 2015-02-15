@@ -121,17 +121,7 @@ public class SctpServer implements Runnable{
 
 				if(nWaitingForResponseCount==0)
 				{
-					System.out.println("================================================");
-					System.out.println("Discovered all nodes in this network");
-					System.out.println("Total No. of Nodes : "+nodeMap.size());
-					System.out.println("================================================");
-					System.out.println("               LIST OF NODES                    ");
-					System.out.println("================================================");
-					for(int n : nodeMap.keySet())
-					{
-						Host hNode = nodeMap.get(n);
-						System.out.println(hNode.hostId+"	"+hNode.hostName+"	 "+hNode.hostPort);
-					}
+					writeOutputToFile();
 					System.exit(0);
 				}
 			}
@@ -155,6 +145,24 @@ public class SctpServer implements Runnable{
 		byte[] bufArr = new byte[byteBuffer.remaining()];
 		byteBuffer.get(bufArr);
 		return new String(bufArr);
+	}
+	
+	public void writeOutputToFile() throws FileNotFoundException, UnsupportedEncodingException
+	{
+		String fileName = "node"+nodeId+".txt";
+		PrintWriter writer = new PrintWriter(fileName, "UTF-8");
+		writer.println("================================================");
+		writer.println("Discovered all nodes in this network");
+		writer.println("Total No. of Nodes : "+nodeMap.size());
+		writer.println("================================================");
+		writer.println("               LIST OF NODES                    ");
+		writer.println("================================================");
+		for(int n : nodeMap.keySet())
+		{
+			Host hNode = nodeMap.get(n);
+			writer.println(hNode.hostId+"	"+hNode.hostName+"	 "+hNode.hostPort);
+		}
+		writer.close();
 	}
 
 	public void startDiscovery(ArrayList<Host> hostList, String sMessageType)
