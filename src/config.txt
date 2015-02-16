@@ -6,13 +6,29 @@
 # a comment and should be ignored by the parser.
 
 # Number of nodes
-p 3 3
+p 8 13
 
-e 0 1
 e 1 2
-e 2 0
+e 2 3
+e 3 4
+e 4 5
+e 5 1
+e 5 2
+e 4 3
+e 7 8
+e 8 9
+e 9 7
+e 7 9
+e 9 8
+e 8 7
 
-n 0	dc07		1933	
-n 1	dc08		2924
-n 2	dc09		3915	
+
+n 1 dc05        5963   
+n 2 dc06        6574
+n 3 dc07        7885 
+n 4 dc08        7685   
+n 5 dc09        7375
+n 7 dc02        7395
+n 8 dc03        7305
+n 9 dc04        7315	
 	

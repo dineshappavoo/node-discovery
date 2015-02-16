@@ -35,14 +35,20 @@ cat $CONFIG | sed -e "s/#.*//" | sed -e "/^\s*$/d" | grep "n" |
     do
         host=$( echo $line | awk '{ print $3 }' )
         nodeId=$( echo $line | awk '{ print $2 }' )
+
         domain=".utdallas.edu"
+        machine=$host$domain
         val=$netid@$host$domain
         echo $val
         echo $nodeId
 
-        cmd="ssh $val java -classpath $PROJDIR NodeDiscovery $nodeId &"
-        echo $cmd
-        $cmd
+        #ssh $val java $PROJDIR NodeDiscovery $nodeId &
+
+        ssh -q -o StrictHostKeyChecking=no -l "$netid" "$machine" "cd $PROJDIR;java NodeDiscovery $nodeId" &
+
+        #cmd="ssh $val java $PROJDIR NodeDiscovery $nodeId &"
+        #echo $cmd
+        #cmd
 
         n=$(( n + 1 ))
     done
