@@ -41,8 +41,7 @@ public class SctpClient implements Runnable{
 		String responseMessageFromServer="";
 		try
 		{
-			Thread.sleep(2000);
-
+			Thread.sleep(5000);
 			//Create a socket address for  server at dc at port XXX
 			SocketAddress socketAddress = new InetSocketAddress(hostToBeRequested.hostName,hostToBeRequested.hostPort);
 			//Open a channel. NOT SERVER CHANNEL

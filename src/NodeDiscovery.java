@@ -94,7 +94,7 @@ public class NodeDiscovery{
 		//nodeId = scanner.nextInt();
 
 		HashMap<Integer, Host> nMap = sctpClientServer.constructGraph("/home/004/d/dx/dxa132330/advanced-operating-system/projects/node-discovery/config.txt", nodeId);
-		System.out.println("INITIAL WAITING COUNT : "+nWaitingForResponseCount);
+		//System.out.println("INITIAL WAITING COUNT : "+nWaitingForResponseCount);
 		sctpClientServer.initiateDiscovery();
 	}
 

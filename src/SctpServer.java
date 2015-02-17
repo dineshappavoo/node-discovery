@@ -47,9 +47,7 @@ public class SctpServer implements Runnable{
 
 			System.out.println("SERVER STARTED");
 
-			Thread.sleep(6000);
-
-			//Initial node discovery
+			Thread.sleep(5000);
 
 			//Initial discovery for its own adjacency list
 			ArrayList<Host> initialAdjList = new ArrayList<Host>();
@@ -82,6 +80,7 @@ public class SctpServer implements Runnable{
 					System.out.println("Message Type : "+messageObj.messageType+" From : "+messageObj.nodeInfo.hostName+" Known Host : "+ host.hostName);
 
 				}
+				
 				System.out.println("WAITING COUNT : "+nWaitingForResponseCount);
 
 				Thread.sleep(8000);
@@ -98,7 +97,7 @@ public class SctpServer implements Runnable{
 						newHosts.add(oHost);
 					}
 				}
-				System.out.println("SET OF NEW HOST : "+newHosts.size());
+				//System.out.println("SET OF NEW HOST : "+newHosts.size());
 
 				if(messageObj.messageType.equals("RESPONSE"))
 				{
@@ -110,7 +109,7 @@ public class SctpServer implements Runnable{
 					Host host = messageObj.nodeInfo;
 					startDiscovery(newHosts, "REQUEST");
 
-					//Reponse to the node. Only one node. To utilize the function we used arraylist
+					//Reponse to the node. Only one node. To utilize the function which exists already we used arraylist
 					ArrayList<Host> responseNode = new ArrayList<Host>();
 					responseNode.add(host);
 					startDiscovery(responseNode, "RESPONSE");
@@ -121,6 +120,7 @@ public class SctpServer implements Runnable{
 
 				if(nWaitingForResponseCount==0)
 				{
+					System.out.println("DISCOVERED ALL NODES IN THE NETWORK");
 					writeOutputToFile();
 					System.exit(0);
 				}
@@ -184,7 +184,7 @@ public class SctpServer implements Runnable{
 		{
 			if (nodeId!=hostList.get(i).hostId)
 			{
-				System.out.println("CLIENT CALL TYPE : "+sMessageType);
+				//System.out.println("CLIENT CALL TYPE : "+sMessageType);
 				//Increment the count only on requests
 				if(sMessageType.equals("REQUEST"))
 				{
